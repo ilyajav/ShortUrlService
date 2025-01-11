@@ -94,7 +94,7 @@ public class UserDatabase {
         pstmt.setString(1, userUUID);
 
         ResultSet rs = pstmt.executeQuery();
-        System.out.println("Доступные вам короткие ссылки:");
+        System.out.println("Short links available to you:");
         int i = 1;
         while (rs.next()) {
             String  shortUrl = rs.getString("SHORTURL");
@@ -116,6 +116,7 @@ public class UserDatabase {
     public static String getLongUrl(String userUUID, String shortUrl) throws SQLException {
         Connection connection = DriverManager.getConnection(url, user, password);
         String longUrl1 = null;
+
         try (PreparedStatement pstmt = connection.prepareStatement("SELECT LONGURL FROM userTable WHERE SHORTURL = ? AND UUID = ?")) {
             pstmt.setString(1, shortUrl);
             pstmt.setString(2, userUUID);
@@ -144,7 +145,7 @@ public class UserDatabase {
         int counterVal = 0;
         while (rs.next()) {
             int counterValuer = rs.getInt("COUNTER");
-            System.out.println("Количество переходов равняется " + counterValuer);
+            System.out.println("The number of transitions - " + counterValuer);
             counterVal = counterValuer;
             if (counterVal == 0) {
                 deleteMaxCounterRows();
